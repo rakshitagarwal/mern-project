@@ -1,31 +1,18 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const app = express();
 const authRoute = require("./router/auth-router");
 const contactRoute = require("./router/contact-router");
 const serviceRoute = require("./router/service-router");
 const adminRoute = require("./router/admin-router");
 const connectDb = require("./utils/db");
 const errorMiddleware = require("./middlewares/error-middleware");
+// const path = require("path");
 
-// let's tackle cors
-const corsOptions = {
-  // origin: "http://localhost:5173",
-  origin: (origin, callback) => {
-    // Check if the origin is allowed
-    const allowedOrigins = [
-      "http://localhost:5173",
-      "http://localhost:4173"
-    ];
-    const isAllowed = allowedOrigins.includes(origin);
-    callback(null, isAllowed ? origin : false);
-  },
-  methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
-  credentials: true,
-};
+// const __dirname = path.resolve();
 
-app.use(cors(corsOptions));
+const app = express();
+app.use(cors());
 
 app.use(express.json());
 
@@ -36,6 +23,8 @@ app.use("/api/data", serviceRoute);
 
 // let's define admin route
 app.use("/api/admin", adminRoute);
+
+// app.use(express.static(path.join(__dirname, "/client/dist")));
 
 app.use(errorMiddleware);
 
