@@ -9,7 +9,7 @@ const connectDb = require("./utils/db");
 const errorMiddleware = require("./middlewares/error-middleware");
 const path = require("path");
 
-const __dirname = path.resolve();
+const dirname = path.resolve();
 
 const app = express();
 app.use(cors());
@@ -24,7 +24,7 @@ app.use("/api/data", serviceRoute);
 // let's define admin route
 app.use("/api/admin", adminRoute);
 
-app.use(express.static(path.join(__dirname, "/client/dist")));
+app.use(express.static(path.join(dirname, "/client/dist")));
 
 app.use(errorMiddleware);
 
